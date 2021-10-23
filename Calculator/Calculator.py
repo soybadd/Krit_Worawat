@@ -206,7 +206,7 @@ class Ui_Form(object):
         self.CButton.setText(_translate("Form", "C"))
 
 
-    def pressed(self,)
+
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)

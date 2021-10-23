@@ -1,0 +1,34 @@
+#: import ew kivy.uix.effectwidget
+
+<MusicScreen>:
+    EffectWidget:
+        effects: [ew.VerticalBlurEffect(size=5), ew.HorizontalBlurEffect(size=5)]
+        FitImage:
+            source: ('a.jpg')
+    MDBoxLayout:
+        orientation: 'vertical'
+        padding: ['10dp', '30dp','10dp','50dp']
+        MDBoxLayout:
+            MDBoxLayout:
+                MyIcon:
+                    icon: 'restart'
+                MyIcon:
+                    icon: 'skip-previous-outline'
+                MyIcon:
+                    icon: 'skip-backward-outline'
+                MyIcon:
+                    icon: 'play-outline'
+                MyIcon:
+                    icon: 'skip-forward'
+                MyIcon:
+                    icon: 'skip-next-outline' 
+                MyIcon:
+                    icon: 'format-list-bulleted'
+
+<MyIcon@MDIconButton>:
+    color: [.7, 0, 0, 1]
+    size_hint: None, None
+    user_font_size: '20sp'
+    theme_text_color: 'Custom'
+    size: ('20dp', '20dp')
+    text_color: [1, 1, 1, 1]
