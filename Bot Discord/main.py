@@ -1,8 +1,3 @@
-# Client ID : 901118179986776094
-# Token: OTAxMTE4MTc5OTg2Nzc2MDk0.YXLNtA._yPzLjq0WRzhZgIwh8_hNPfLqZ0
-# Permision Integer: 8
-
-
 # Import Libary Discord
 import discord
 from discord.ext import commands
