@@ -294,7 +294,7 @@ class Ui_Form(object):
                         self.label.setText(finalanswer)
                 else:
                     finalanswer = str(answer)[0] + "." + str(answer)[1] + '*10**' + str(len(str(answer))-1)
-                    self.label.setText(str(finalanswer))
+                    self.label.setText(finalanswer)
                 self.label_2.setText("0")
         except:
             self.label.setText("ERROR")
@@ -316,7 +316,6 @@ class Ui_Form(object):
         display = self.label.text()
         display = display[:-1]
         self.label.setText(str(display))
-        print(str(display))
 
 
     def retranslateUi(self, Form):
