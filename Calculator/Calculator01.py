@@ -227,16 +227,24 @@ class Ui_Form(object):
         self.Del_Button.setStyleSheet("Background-color: #E7B9A0")
         self.Del_Button.setObjectName("Del_Button")
 
+
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
 
+
     def press_button(self, pressed):
+        display_2 = self.label_2.text()
         if pressed == 'C':
             self.label.setText('0')
             self.label_2.setText('0')
         elif pressed == 'CE':
             self.label.setText('0')
+        elif display_2 == '0-':
+            self.label.setText('-' + str(pressed))
+            self.label_2.setText('0')
+
+            
         else:
             if self.label.text() == '0':
                 self.label.setText(pressed)
@@ -246,7 +254,7 @@ class Ui_Form(object):
 
     def dot_button(self):
         display = self.label.text()
-        if display[-1] == '.':
+        if '.' in display:
             pass
 
         else:
@@ -254,6 +262,16 @@ class Ui_Form(object):
 
 
     def mathequal_button(self):
+        #try
+        '''self.numb2 = [self.label.text()]
+        self.numb1 = [self.label_2.text() + self.label.text()]
+        string111 = ''.join(self.numb1) + ''.join(self.numb2)
+        self.label_2.setText(string111)
+        ans = eval(string111)
+        self.label.setText(str(ans))
+        self.numb1 = [str(ans)]
+        self.numb2 = []'''
+
         if self.label_2.text() == "0":
             display = self.label.text()
         else:
@@ -261,33 +279,34 @@ class Ui_Form(object):
             display = self.label_2.text()
         try:
             answer = eval(display)
-            if len(str(answer)) <= 13:
+            count = 20
+            if len(str(answer)) <= count:
                 self.label.setText(str(answer))
                 self.label_2.setText("0")
             else:
-                count = 20
-                str_of_ans = str(answer)
-                if "." in str_of_ans:
-                    while len(str_of_ans) > count and count > 0:
+                if "." in str(answer):
+                    while len(str(answer)) > count and count > 0:
                         answer = round(answer, count)
-                        str_of_ans = str(answer)
                         count -= 1
-                    self.label.setText(str_of_ans)
-                    if len(str_of_ans) > count:
-                        finalanswer = str_of_ans[0] + "." + str_of_ans[1] + '*10**' + str(len(str_of_ans)-3)
+                    self.label.setText(str(answer))
+                    if len(str(answer)) > count:
+                        finalanswer = str(answer)[0] + "." + str(answer)[1] + '*10**' + str(len(str(answer))-3)
                         self.label.setText(finalanswer)
                 else:
-                    finalanswer = str_of_ans[0] + "." + str_of_ans[1] + '*10**' + str(len(str_of_ans)-1)
+                    finalanswer = str(answer)[0] + "." + str(answer)[1] + '*10**' + str(len(str(answer))-1)
                     self.label.setText(str(finalanswer))
                 self.label_2.setText("0")
         except:
             self.label.setText("ERROR")
             self.label_2.setText("0")
-    
+
 
     def plusminusmultidivide(self, pressed):
-        if self.label_2.text() == '0':
-            self.label_2.setText(str(self.label.text() + str(pressed)))
+        if self.label.text() == '0' and self.label_2.text()[-1].isnumeric() == False:
+            self.label.setText('0')
+            self.label_2.setText(str(self.label_2.text()[:-1]) + str(pressed))
+        elif self.label_2.text() == '0':
+            self.label_2.setText(str(self.label.text()) + str(pressed))
             self.label.setText('0')
         else:
             self.label_2.setText(str(self.label_2.text()) + str(self.label.text()) + str(pressed))
