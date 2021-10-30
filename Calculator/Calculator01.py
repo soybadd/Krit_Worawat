@@ -316,6 +316,7 @@ class Ui_Form(object):
         display = self.label.text()
         display = display[:-1]
         self.label.setText(str(display))
+        print(str(display))
 
 
     def retranslateUi(self, Form):
