@@ -2,7 +2,6 @@
 import discord
 from discord.ext import commands
 from discord.utils import get
-from discord import FFmpegPCMAudio
 import youtube_dl
 import asyncio
 from async_timeout import timeout
@@ -17,8 +16,10 @@ load_dotenv()
 token = os.getenv('Token')
 
 
+#from host_cloud import keep_alive
+
 # Declare prefix of the command
-bot = commands.Bot(command_prefix = '.', help_command = None)
+bot = commands.Bot(command_prefix = '*', help_command = None)
 
 
 youtube_dl.utils.bug_reports_message = lambda: ''
@@ -168,8 +169,6 @@ class MusicPlayer:
     # Leaving itslef out function
     async def destroy(self, guild,text):
         """Disconnect and cleanup the player."""
-        del players[self._guild]
-        # deleting music player profile
         await self._guild.voice_client.disconnect()
         return self.bot.loop.create_task(self._cog.cleanup(guild))
 
@@ -180,7 +179,7 @@ class MusicPlayer:
 async def on_ready():
     # When Bot is ready
     print('We have logged in as {0.user}'.format(bot))
-    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name='.help'))
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name='*help'))
 
 
 # Test Command
@@ -208,17 +207,17 @@ async def logout(ctx):
 async def help(ctx):
     print('help')
     emBed = discord.Embed(title = 'Toturial Lil Krit', description = 'Let\'s see what\'s Lil Krit can do for you', color = 0xFF7A33)
-    emBed.add_field(name='.help', value = 'Get help commands', inline = False)
-    emBed.add_field(name='.test <text>', value = 'Respond message you\'ve send', inline = False)
-    emBed.add_field(name='.clear <number of messages>', value = 'Delete the previous messages', inline = False)
-    emBed.add_field(name='.play <URL or name of the song>', value = 'Play the song and add it in to a queue', inline = False)
-    emBed.add_field(name='.pause', value = 'Pause the song', inline = False)
-    emBed.add_field(name='.resume', value = 'Resume the song', inline = False)
-    emBed.add_field(name='.skip', value = 'Skip the song', inline = False)
-    emBed.add_field(name='.stop', value = 'Stop the song', inline = False)
-    emBed.add_field(name='.queue', value = 'Show the queue list', inline = False)
-    emBed.add_field(name='.leave', value = 'Leave bot out of channel', inline = False)
-    emBed.add_field(name='.logout', value = 'Turn to offline', inline = False)
+    emBed.add_field(name='*help', value = 'Get help commands', inline = False)
+    emBed.add_field(name='*test <text>', value = 'Respond message you\'ve send', inline = False)
+    emBed.add_field(name='*clear <number of messages>', value = 'Delete the previous messages', inline = False)
+    emBed.add_field(name='*play <URL or name of the song>', value = 'Play the song and add it in to a queue', inline = False)
+    emBed.add_field(name='*pause', value = 'Pause the song', inline = False)
+    emBed.add_field(name='*resume', value = 'Resume the song', inline = False)
+    emBed.add_field(name='*skip', value = 'Skip the song', inline = False)
+    emBed.add_field(name='*stop', value = 'Stop the song', inline = False)
+    emBed.add_field(name='*queue', value = 'Show the queue list', inline = False)
+    emBed.add_field(name='*leave', value = 'Leave bot out of channel', inline = False)
+    emBed.add_field(name='*logout', value = 'Turn to be offline', inline = False)
     emBed.set_thumbnail(url='https://i.postimg.cc/W1CR8p3c/IMG-6998.jpg')
     emBed.set_author(name='Krithoolychit\'s Project', url = 'https://discord.com/users/496281331060178944', icon_url='https://i.postimg.cc/Vv2s2xBJ/Presentation1.png')
     await ctx.channel.send(embed = emBed)
@@ -392,11 +391,12 @@ async def queue(ctx):
 @bot.command()
 async def leave(ctx):
     print('Leave')
-    del players[ctx.guild.id]
     # deleting music player profile
     await ctx.channel.send('See ya Dude!', delete_after = 5)
     await ctx.voice_client.disconnect()
 
+#run the web sever
+#keep_alive()
 
 # Putting token in for activating Bot
 bot.run(token)
