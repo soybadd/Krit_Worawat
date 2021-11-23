@@ -80,7 +80,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
             # take first item from a playlist
             data = data['entries'][0]
 
-        await ctx.send(f'```ini\n[Added {data["title"]} to the Queue.]\n```', delete_after = 15) #delete after can be added
+        await ctx.send(f'```ini\n[Added {data["title"]} to the Queue.]\n```', delete_after = 30)
 
         if download:
             source = ytdl.prepare_filename(data)
@@ -138,6 +138,7 @@ class MusicPlayer:
                 async with timeout(300):  # 5 minutes...
                     source = await self.queue.get()
             except asyncio.TimeoutError:
+                await self._channel.send('See ya Dude!')
                 return self.destroy(self._guild)
 
             if not isinstance(source, YTDLSource):
@@ -177,6 +178,7 @@ class MusicPlayer:
         """Disconnect and cleanup the player."""
         return self.bot.loop.create_task(self._cog.cleanup(guild))
 
+
 class Song(commands.Cog):
 
     def __init__(self, bot):
@@ -215,7 +217,7 @@ class Song(commands.Cog):
 
     # Play the Song Command
     @commands.command(name='play', aliases=['p'])
-    async def play_(self, ctx, search: str):
+    async def play_(self, ctx ,* ,search: str):
         print('play')
         self.bot = ctx.bot
         self._guild = ctx.guild
@@ -359,7 +361,7 @@ class Song(commands.Cog):
         listtostr = '\n'.join(f'**`{song["title"]}`**' for song in upcoming)
         # Format list to string
         embed = discord.Embed(title=f'Upcoming - Next {len(upcoming)}', description=listtostr, color=0xFF7A33)
-        await ctx.send(embed=embed)
+        await ctx.send(embed=embed, delete_after = 45)
 
 
     # Leave Channel Command
@@ -367,11 +369,11 @@ class Song(commands.Cog):
     async def leave_(self, ctx: commands.Context):
         print('Leave')
         # deleting music player profile
-        await ctx.channel.send('See ya Dude!', delete_after = 5)
+        await ctx.channel.send('See ya Dude!')
         await self.cleanup(ctx.guild)
 
 
-###########################################################################################################
+##########################################################################################################################################
 
 # Turning on Bot
 @bot.event
@@ -387,7 +389,7 @@ async def test(ctx, *, message):
     # '*' is for spacebar
     await ctx.channel.send(message)
 
-'''@bot.command()
+@bot.command()
 async def ริว(ctx):
     # '*' is for spacebar
     await ctx.channel.send('ไอเหี้ยลาบริวอะนะ')
@@ -430,7 +432,7 @@ async def อัสสัม(ctx):
 @bot.command()
 async def ดอน(ctx):
     # '*' is for spacebar
-    await ctx.channel.send('ไอเถ่าดอนอะนะ')'''
+    await ctx.channel.send('ไอเถ่าดอนอะนะ')
 
 # Clear Command
 @bot.command()
@@ -442,7 +444,7 @@ async def clear(ctx, amount = 1):
 @bot.command()
 async def logout(ctx):
     print('logout')
-    await ctx.channel.send('Loging Out...', delete_after = 5)
+    await ctx.channel.send('Loging Out...')
     await bot.logout()
 
 
@@ -461,7 +463,6 @@ async def help(ctx):
     emBed.add_field(name='*stop', value = 'Stop the song', inline = False)
     emBed.add_field(name='*queue or q or playlist', value = 'Show the queue list', inline = False)
     emBed.add_field(name='*leave or l', value = 'Leave bot out of channel', inline = False)
-    emBed.add_field(name='*logout', value = 'Turn to be offline', inline = False)
     emBed.set_thumbnail(url='https://i.postimg.cc/W1CR8p3c/IMG-6998.jpg')
     emBed.set_author(name='Krithoolychit\'s Project', url = 'https://discord.com/users/496281331060178944', icon_url='https://i.postimg.cc/Vv2s2xBJ/Presentation1.png')
     await ctx.channel.send(embed = emBed)
