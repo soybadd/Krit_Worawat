@@ -452,7 +452,7 @@ async def logout(ctx):
 @bot.command()
 async def help(ctx):
     print('help')
-    emBed = discord.Embed(title = 'Toturial Lil Krit', description = 'Let\'s see what\'s Lil Krit can do for you', color = 0xFF7A33)
+    emBed = discord.Embed(title = 'Tutorial Lil Krit', description = 'Let\'s see what\'s Lil Krit can do for you', color = 0xFF7A33)
     emBed.add_field(name='*help', value = 'Get help commands', inline = False)
     emBed.add_field(name='*test <text>', value = 'Respond message you\'ve send', inline = False)
     emBed.add_field(name='*clear <number of messages>', value = 'Delete the previous messages', inline = False)
